@@ -26,7 +26,7 @@ nav.top a{color:var(--ink);text-decoration:none;font:600 .95rem 'DM Sans',Arial,
 @media(max-width:700px){nav.top{top:auto;bottom:12px;right:50%;transform:translateX(50%);white-space:nowrap}}
 .hero{position:relative;height:380vh}
 .stage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;background:var(--bg)}
-.bk{position:absolute;left:0;top:0;width:var(--bw);will-change:transform;transform-origin:50.0% 52.0%}
+.bk{position:absolute;left:0;top:0;width:var(--bw);will-change:transform;transform-origin:50% 64%}
 .bk img{display:block;width:100%;height:auto;box-shadow:0 18px 40px rgba(0,0,0,.28)}
 .copy{position:absolute;z-index:4;left:20px;right:20px;bottom:70px;text-align:center;opacity:0;will-change:opacity}
 .copy h1{font-size:clamp(2.4rem,11vw,4.4rem);color:var(--ink)}
@@ -52,6 +52,8 @@ h2{font-size:clamp(2rem,6vw,3.2rem);margin-bottom:1.6rem}
 footer{text-align:center;color:var(--soft);font-size:.9rem;padding:3rem 16px 6rem;border-top:1px solid var(--soft)}
 @media (prefers-reduced-motion:reduce){.hero{height:auto}.stage{position:relative;height:auto;padding:2rem 20px 7rem;min-height:100svh}.bk{position:relative;margin:0 auto 1.4rem;width:min(60vw,280px)!important;transform:none!important}.copy{position:relative;opacity:1!important;left:auto;right:auto;bottom:auto;top:auto;width:auto;transform:none!important;text-align:center}.btns{justify-content:center}.stage::after{display:none}}
 .copy h1,h2,.bkrow h3{letter-spacing:.06em;text-transform:uppercase}.copy h1{font-size:clamp(1.45rem,6.4vw,3.6rem);white-space:nowrap}.copy .lab{font-size:1rem}body{font-size:1.1rem}
+.water{position:absolute;inset:0;overflow:hidden}.water i{position:absolute;left:0;width:100%;background:url(img/thief.jpg) no-repeat;background-size:var(--bw) auto;will-change:transform}
+@media (prefers-reduced-motion:reduce){.water{display:none}}@media(min-width:900px){.copy h1{font-size:clamp(2rem,3.2vw,3rem)}}
 </style>
 </head>
 <body>
@@ -59,7 +61,7 @@ footer{text-align:center;color:var(--soft);font-size:.9rem;padding:3rem 16px 6re
 <nav class="top" aria-label="Sections"><a href="#books">Books</a><a href="#about">Courtney</a><a href="#meet">Events</a></nav>
 <header class="hero">
   <div class="stage" id="stage">
-    <div class="bk" id="bk" role="img" aria-label="The Moment Thief by Courtney Grace Powers: a white-haired woman in a magenta coat walking a rainy neon alley, reflected in the water"><img src="img/thief.jpg" alt="" width="1000" height="1620"></div>
+    <div class="bk" id="bk" role="img" aria-label="The Moment Thief by Courtney Grace Powers: a white-haired woman in a magenta coat walking a rainy neon alley, reflected in the water"><img src="img/thief.jpg" alt="" width="1000" height="1620"><div class="water" id="water" aria-hidden="true"><i style="top:64.200%;height:3.730%"></i><i style="top:67.780%;height:3.730%"></i><i style="top:71.360%;height:3.730%"></i><i style="top:74.940%;height:3.730%"></i><i style="top:78.520%;height:3.730%"></i><i style="top:82.100%;height:3.730%"></i><i style="top:85.680%;height:3.730%"></i><i style="top:89.260%;height:3.730%"></i><i style="top:92.840%;height:3.730%"></i><i style="top:96.420%;height:3.730%"></i></div></div>
     <div class="copy" id="copy">
       <h1>The Moment Thief</h1>
       <div class="lab">Neon-drenched Eito City, where time-travelling operatives tweak the past</div>
@@ -86,17 +88,19 @@ footer{text-align:center;color:var(--soft);font-size:.9rem;padding:3rem 16px 6re
 </main>
 <footer>A mockup made by Sparsh Saini for Courtney Grace Powers. Not affiliated, not live.</footer>
 <script>
-(()=>{const hero=document.querySelector('.hero'),stage=document.getElementById('stage'),copy=document.getElementById('copy'),bk=document.getElementById('bk');
+(()=>{const hero=document.querySelector('.hero'),stage=document.getElementById('stage'),copy=document.getElementById('copy'),bk=document.getElementById('bk'),sl=[...document.querySelectorAll('#water i')];
 if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
 let W,H,bw,bh,rx,ry,ht,tick=false;const cl=v=>Math.max(0,Math.min(1,v)),eio=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
 const R=0.6173,S0=2.2;
-function measure(){W=innerWidth;H=stage.clientHeight;const d=W>=900;bh=d?H*.72:Math.min(H*.58,W*.82/R);bw=bh*R;bk.style.setProperty('--bw',bw+'px');rx=d?W*.3-bw/2:W/2-bw/2;ry=d?H/2-bh/2:H*.05;ht=hero.offsetHeight-H;draw()}
+function measure(){W=innerWidth;H=stage.clientHeight;const d=W>=900;bh=d?H*.72:Math.min(H*.58,W*.82/R);bw=bh*R;bk.style.setProperty('--bw',bw+'px');rx=d?W*.3-bw/2:W/2-bw/2;ry=d?H/2-bh/2:H*.05;ht=hero.offsetHeight-H;sl.forEach((e,i)=>e.style.backgroundPosition=`0 ${-bh*(0.642+i*0.0358)}px`);draw()}
 function draw(){tick=false;const p=cl((scrollY-hero.offsetTop)/ht);
  const z=eio(cl(p/.72));const s=S0-(S0-1)*z;
  // start deep in the cover, pull back until the whole cover sits in its place
- const fx=bw*0.5,fy=bh*0.52;
+ const fx=bw*0.5,fy=bh*0.64;
  const tx=(1-z)*(W/2-fx)+z*rx,ty=(1-z)*(H*.4-fy)+z*ry;
  bk.style.transform=`translate(${tx}px,${ty}px) scale(${s})`;
+ // the street water is still rippling when you arrive; as you scroll it stills, band by band from the far edge, and her reflection resolves into the thief
+ for(let i=0;i<sl.length;i++){const k=1-Math.pow(cl((p-.04*(sl.length-1-i)*.25)/.66),1.6),a=k*bw*.035*(.6+i*.06);sl[i].style.transform=`translate3d(${(a*Math.sin(i*1.7+p*26)).toFixed(2)}px,0,0) scaleX(${(1+.08*k).toFixed(4)})`}
  const c=cl((p-.8)/.14);copy.style.opacity=c.toFixed(3);copy.style.transform=(W>=900?'translateY(-50%) ':'')+`translateY(${(1-c)*14}px)`}
 addEventListener('scroll',()=>{if(!tick){tick=true;requestAnimationFrame(draw)}},{passive:true});addEventListener('resize',measure);measure()})();
 </script>
